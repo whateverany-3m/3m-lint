@@ -12,7 +12,7 @@ RUN set -x ;\
   echo "INFO: end RUN"
 
 ENV RUN_LOCAL true
-ENV DEFAULT_WORKSPACE .
+ENV DEFAULT_WORKSPACE /opt/3m
 
 ENTRYPOINT ["/action/lib/linter.sh"]
 
