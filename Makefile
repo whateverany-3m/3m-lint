@@ -13,6 +13,7 @@ preaction: .env env-TARGET_REGISTRY env-TARGET_REGISTRY_TOKEN env-TARGET_REGISTR
 runaction: .env env-SOURCE_GROUP env-SOURCE_IMAGE env-SOURCE_REGISTRY env-SOURCE_VERSION env-TARGET_GROUP env-TARGET_IMAGE env-TARGET_REGISTRY env-TARGET_SEMANTIC_RC env-TARGET_SEMANTIC_VERSION
 	$(DOCKER_COMPOSE_RUN) 3m make _login
 	$(DOCKER_COMPOSE_RUN) 3m make _build
+	$(DOCKER_COMPOSE_RUN) lint make _lint
 	$(DOCKER_COMPOSE_RUN) 3m make _publish
 .PHONY: .runaction
 
@@ -39,6 +40,10 @@ _build:
 	  .
 .PHONY: _build
 
+_lint:
+	echo "INFO: docker build"
+.PHONY: _lint
+
 _publish:
 	echo "INFO: docker images"
 	docker images
@@ -54,7 +59,9 @@ _logout: .env env-TARGET_REGISTRY
 .PHONY: _logout
 
 shell: .env env-DOCKER_COMPOSE_RUN
-	$(DOCKER_COMPOSE_RUN) 3m /bin/sh
+	#$(DOCKER_COMPOSE_RUN) 3m /bin/sh
+	#$(DOCKER_COMPOSE_RUN) lint /bin/bas
+	$(DOCKER_COMPOSE_RUN) target /bin/bash
 .PHONY: shell
 
 shell-root: .env env-DOCKER_COMPOSE_RUN
